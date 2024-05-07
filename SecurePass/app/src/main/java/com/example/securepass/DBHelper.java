@@ -102,23 +102,8 @@ public class DBHelper extends SQLiteOpenHelper {
 //        db.close();
 //    }
 
-//    public void readTableData(String tableName) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        String query = "SELECT * FROM " + tableName;
-//        Cursor cursor = db.rawQuery(query, null);
-//        while (cursor.moveToNext()) {
-//            int id = cursor.getInt(0);
-//            String email = cursor.getString(1);
-//            String password = cursor.getString(2);
-//            System.out.println("User: " + id + ", Email: " + email + ", Password: " + password);
-//        }
-//        cursor.close();
-//        db.close();
-//    }
-
-    // Method to check credentials and retrieve user_id
     @SuppressLint("Range")
-    public int getUserId(String email, String password) {
+    public int checkUser(String email, String password) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + KEY_ID + " FROM " + TABLE_USERS + " WHERE " + KEY_EMAIL + " = ? AND " + KEY_PASSWORD + " = ?";
         String[] selectionArgs = {email, password};
@@ -135,7 +120,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return userId;
     }
 
-    // Method to add a user to the table
     public long addUser(String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         long userId = -1; // Default user ID if insertion fails
@@ -153,7 +137,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return userId;
     }
 
-    // Method to get all passwords for a user_id (excluding deleted passwords)
     public Cursor getPasswordsForUser(int userId) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_USER_ID + " = ? AND " + KEY_DELETED + " = 0";
@@ -161,7 +144,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, selectionArgs);
     }
 
-    // Method to get a password by its id
     public Cursor getPasswordById(int passwordId) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_ID + " = ?";
@@ -169,12 +151,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, selectionArgs);
     }
 
-    // Method to get a trashed password list
-    public Cursor getTrashedPasswords() {
+    public Cursor getTrashedPasswords(int userId) {
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_DELETED + " = 1";
-        return db.rawQuery(query, null);
+        String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_DELETED + " = 1 AND " + KEY_USER_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+        return db.rawQuery(query, selectionArgs);
     }
+
 
     // Method to get all the passwords with given user_id and folder_id
     public Cursor getPasswordsForUserAndFolder(int userId, int folderId) {
@@ -233,7 +216,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Method to get a list of all folders for given user_id
     public Cursor getFoldersForUser(int userId) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_FOLDERS + " WHERE " + KEY_USER_ID + " = ?";
@@ -283,6 +265,4 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {String.valueOf(userId)};
         return db.rawQuery(query, selectionArgs);
     }
-
-
 }

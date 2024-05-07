@@ -1,7 +1,6 @@
 package com.example.securepass.ui.login;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,9 +11,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
@@ -47,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                int userId = dbHelper.getUserId(email, password);
+                int userId = dbHelper.checkUser(email, password);
                 if (userId != -1) {
                     // Credentials are valid, start MainActivity with user ID
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
