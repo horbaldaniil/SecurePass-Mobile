@@ -1,4 +1,4 @@
-package com.example.securepass.ui.dashboard;
+package com.example.securepass.ui.trash;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.securepass.databinding.FragmentDashboardBinding;
+import com.example.securepass.databinding.FragmentTrashBinding;
 
-public class DashboardFragment extends Fragment {
+public class TrashFragment extends Fragment {
 
-    private FragmentDashboardBinding binding;
+    private FragmentTrashBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        TrashViewModel trashViewModel =
+                new ViewModelProvider(this).get(TrashViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentTrashBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textTrash;
+        trashViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
