@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class PasswordsFragment extends Fragment {
             navController.popBackStack(R.id.navigation_passwords, true);
             navController.navigate(R.id.navigation_single_password, bundle);
         });
+
 
         return root;
     }
