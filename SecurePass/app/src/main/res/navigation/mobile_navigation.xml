@@ -40,4 +40,14 @@
         android:name="com.example.securepass.ui.singlePassword.SinglePasswordFragment"
         tools:layout="@layout/fragment_single_password" />
 
+    <fragment
+        android:id="@+id/navigation_add_password"
+        android:name="com.example.securepass.ui.AddPassword.AddPasswordFragment"
+        tools:layout="@layout/fragment_add_password" />
+
+    <fragment
+        android:id="@+id/navigation_change_password"
+        android:name="com.example.securepass.ui.ChangePassword.ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password" />
+
 </navigation>

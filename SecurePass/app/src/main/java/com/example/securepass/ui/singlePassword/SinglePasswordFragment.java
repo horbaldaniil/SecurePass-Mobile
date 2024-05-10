@@ -43,6 +43,15 @@ public class SinglePasswordFragment extends Fragment {
             navController.navigate(R.id.navigation_passwords);
         });
 
+        TextView edit = root.findViewById(R.id.edit);
+        edit.setOnClickListener(v -> {
+
+            NavController navController = Navigation.findNavController(v);
+
+            navController.popBackStack();
+            navController.navigate(R.id.navigation_change_password);
+        });
+
         return root;
     }
 }

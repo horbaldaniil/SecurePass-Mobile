@@ -55,6 +55,16 @@ public class PasswordsFragment extends Fragment {
             navController.navigate(R.id.navigation_single_password, bundle);
         });
 
+        ImageButton addButton = root.findViewById(R.id.add_password_button);
+        addButton.setOnClickListener(v -> {
+
+            NavController navController = Navigation.findNavController(v);
+
+            navController.popBackStack();
+            navController.navigate(R.id.navigation_add_password);
+        });
+
+
 
         return root;
     }
