@@ -4,17 +4,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentFoldersBinding;
+import com.example.securepass.ui.passwords.PasswordAdapter;
+
+import java.util.Arrays;
 
 public class FoldersFragment extends Fragment {
 
     private FragmentFoldersBinding binding;
+
+    private String[] folders = new String[] {"Folder1","Folder2","Folder3"};
+    private ListView listView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -24,8 +33,12 @@ public class FoldersFragment extends Fragment {
         binding = FragmentFoldersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textFolders;
-        foldersViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        listView = root.findViewById(R.id.folders_list);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(root.getContext(), R.layout.folder_item, R.id.folder_item_title, folders);
+
+        listView.setAdapter(adapter);
+
         return root;
     }
 

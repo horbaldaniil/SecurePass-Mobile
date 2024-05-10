@@ -16,4 +16,6 @@
     <string name="email_hint">your@email.com</string>
     <string name="password_hint">yourpassword</string>
     <string name="title_activity_login">LoginActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
