@@ -3,24 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_passwords">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.securepass.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_passwords"
+        android:name="com.example.securepass.ui.passwords.PasswordsFragment"
+        android:label="@string/title_passwords"
+        tools:layout="@layout/fragment_passwords" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.securepass.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_folders"
+        android:name="com.example.securepass.ui.folders.FoldersFragment"
+        android:label="@string/title_folders"
+        tools:layout="@layout/fragment_folders" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.securepass.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_trash"
+        android:name="com.example.securepass.ui.trash.TrashFragment"
+        android:label="@string/title_trash"
+        tools:layout="@layout/fragment_trash" />
+
+    <fragment
+        android:id="@+id/navigation_scanner"
+        android:name="com.example.securepass.ui.scanner.ScannerFragment"
+        android:label="@string/title_scanner"
+        tools:layout="@layout/fragment_scanner" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.securepass.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_single_password"
+        android:name="com.example.securepass.ui.singlePassword.SinglePasswordFragment"
+        tools:layout="@layout/fragment_single_password" />
+
+    <fragment
+        android:id="@+id/navigation_add_password"
+        android:name="com.example.securepass.ui.AddPassword.AddPasswordFragment"
+        tools:layout="@layout/fragment_add_password" />
+
+    <fragment
+        android:id="@+id/navigation_change_password"
+        android:name="com.example.securepass.ui.ChangePassword.ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password" />
 
 </navigation>

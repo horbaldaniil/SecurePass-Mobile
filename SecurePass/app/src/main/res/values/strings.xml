@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">SecurePass</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+
+    <string name="title_passwords">All Passwords</string>
+    <string name="title_folders">Folders</string>
+    <string name="title_trash">Trash</string>
+    <string name="title_scanner">Password Scanner</string>
+    <string name="title_profile">Profile Settings</string>
+
     <string name="title_login">Login</string>
     <string name="auth_title_login">SecurePass\nLogin</string>
     <string name="auth_title_signup">SecurePass\nSign up</string>
@@ -12,4 +16,6 @@
     <string name="email_hint">your@email.com</string>
     <string name="password_hint">yourpassword</string>
     <string name="title_activity_login">LoginActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
