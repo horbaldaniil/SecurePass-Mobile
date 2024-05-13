@@ -7,16 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -24,11 +19,6 @@ import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentPasswordsBinding;
-import com.example.securepass.ui.singlePassword.SinglePasswordFragment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PasswordsFragment extends Fragment {
 

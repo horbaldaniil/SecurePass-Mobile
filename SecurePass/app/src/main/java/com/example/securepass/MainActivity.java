@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         com.example.securepass.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        
+
         userId = getIntent().getIntExtra("USER_ID", -1);
 
         if (userId != -1) {

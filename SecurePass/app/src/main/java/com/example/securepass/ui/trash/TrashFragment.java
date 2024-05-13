@@ -1,6 +1,8 @@
 package com.example.securepass.ui.trash;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.securepass.DBHelper;
+import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentTrashBinding;
 import com.example.securepass.ui.passwords.PasswordAdapter;
@@ -21,8 +27,10 @@ public class TrashFragment extends Fragment {
 
     private FragmentTrashBinding binding;
 
-    private String[][] passwords = new String[][] {{"Title1", "your@email.com"}, {"Title2", "your2@email.com"}, {"Title3", "your3@email.com"}};
     private ListView listView;
+
+    private DBHelper dbHelper;
+    private int userId;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +42,40 @@ public class TrashFragment extends Fragment {
 
         listView = root.findViewById(R.id.trash_list);
 
-        //PasswordAdapter adapter = new PasswordAdapter(root.getContext(), R.layout.password_item, Arrays.asList(passwords));
-        //listView.setAdapter(adapter);
+        dbHelper = new DBHelper(requireContext());
+
+        if (getActivity() != null && getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            userId = mainActivity.getUserId();
+        }
+
+        if (userId != -1) {
+            Cursor cursor = dbHelper.getTrashedPasswords(userId);
+            if (cursor != null) {
+                PasswordAdapter adapter = new PasswordAdapter(requireContext(), cursor, R.layout.password_item);
+                listView.setAdapter(adapter);
+            } else {
+                Log.e("PasswordsFragment", "Cursor is null");
+            }
+        } else {
+            Log.e("PasswordsFragment", "Invalid user ID");
+        }
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+
+            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+            int passwordId = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.KEY_ID));
+
+            NavController navController = Navigation.findNavController(view);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("passwordId", passwordId);
+
+            navController.popBackStack(R.id.navigation_passwords, true);
+            navController.navigate(R.id.navigation_single_password, bundle);
+        });
+
+
 
         return root;
     }
