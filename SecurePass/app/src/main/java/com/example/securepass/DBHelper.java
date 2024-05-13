@@ -277,13 +277,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void restoreAllPasswordsForUser(int userId) {
+    public void deleteAllTrashedPasswordsForUser(int userId) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_DELETED, 0); // Mark all passwords as not deleted
-        String whereClause = KEY_USER_ID + " = ?";
-        String[] whereArgs = {String.valueOf(userId)};
-        db.update(TABLE_PASSWORDS, values, whereClause, whereArgs);
+
+        String whereClause = KEY_USER_ID + " = ? AND " + KEY_DELETED + " = ?";
+        String[] whereArgs = {String.valueOf(userId), "1"};
+
+        db.delete(TABLE_PASSWORDS, whereClause, whereArgs);
+
         db.close();
     }
 

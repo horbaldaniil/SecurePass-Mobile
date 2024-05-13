@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,6 +43,8 @@ public class TrashFragment extends Fragment {
 
         listView = root.findViewById(R.id.trash_list);
 
+        ImageButton deleteAll = root.findViewById(R.id.delete_all);
+
         dbHelper = new DBHelper(requireContext());
 
         if (getActivity() != null && getActivity() instanceof MainActivity) {
@@ -75,6 +78,12 @@ public class TrashFragment extends Fragment {
             navController.navigate(R.id.navigation_single_password, bundle);
         });
 
+        deleteAll.setOnClickListener(v -> {
+            dbHelper.deleteAllTrashedPasswordsForUser(userId);
+            NavController navController = Navigation.findNavController(v);
+            navController.popBackStack(R.id.navigation_trash, true);
+            navController.navigate(R.id.navigation_trash);
+        });
 
 
         return root;
