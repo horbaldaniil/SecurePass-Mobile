@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "mydatabase.db";
+    public static final String DATABASE_NAME = "securepass.db";
 
     public static final int DATABASE_VERSION = 1;
 
@@ -27,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_FOLDERS = "folders";
 
     // Common column names
-    public static final String KEY_ID = "id";
+    public static final String KEY_ID = "_id";
     public static final String KEY_USER_ID = "user_id";
 
     // USERS table - column names
@@ -90,17 +90,19 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-//    public void generateUserTestData() {
-//        String sql = "INSERT INTO " + TABLE_USERS + " ("+ KEY_ID + ", " + KEY_EMAIL + ", " + KEY_PASSWORD + ") " +
-//                "VALUES " +
-//                "(1, 'test1@example.com', 'password123'), " +
-//                "(2, 'test2@example.com', 'password456'), " +
-//                "(3, 'test3@example.com', 'password789')";
-//
-//        SQLiteDatabase db = getWritableDatabase();
-//        db.execSQL(sql);
-//        db.close();
-//    }
+    public void generateUserTestData() {
+        String currentTime = String.valueOf(System.currentTimeMillis());
+
+        String sql = "INSERT INTO " + TABLE_PASSWORDS + " ("+ KEY_TITLE + ", " + KEY_PASSWORD + ",  " + KEY_EMAIL_USERNAME + ", " + KEY_USER_ID + ", " + KEY_LAST_UPDATED + ", " + KEY_DELETED + ") " +
+                "VALUES " +
+                "('Title1', 'password1', 'your1@email.com', 1, '" + currentTime + "', 0), " +
+                "('Title2', 'password2', 'your2@email.com', 1, '" + currentTime + "', 0), " +
+                "('Title3', 'password3', 'your3@email.com', 1, '" + currentTime + "', 0)";
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(sql);
+        db.close();
+    }
 
     @SuppressLint("Range")
     public int checkUser(String email, String password) {

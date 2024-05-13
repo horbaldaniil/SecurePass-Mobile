@@ -1,10 +1,12 @@
 package com.example.securepass.ui.passwords;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,34 +16,31 @@ import com.example.securepass.R;
 
 import java.util.List;
 
-public class PasswordAdapter extends ArrayAdapter<String[]> {
+public class PasswordAdapter extends CursorAdapter {
 
     private Context mContext;
     private int mResource;
 
-    public PasswordAdapter(Context context, int resource, List<String[]> objects) {
-        super(context, resource, objects);
+    public PasswordAdapter(Context context, Cursor cursor, int flags) {
+        super(context, cursor, flags);
         mContext = context;
-        mResource = resource;
+        mResource = flags;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
-        }
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        return LayoutInflater.from(mContext).inflate(mResource, parent, false);
+    }
 
-        String[] password = getItem(position);
+    @Override
+    public void bindView(View view, Context context, Cursor cursor) {
+        TextView titleTextView = view.findViewById(R.id.password_item_title);
+        TextView emailTextView = view.findViewById(R.id.password_item_email);
 
-        TextView titleTextView = convertView.findViewById(R.id.password_item_title);
-        TextView emailTextView = convertView.findViewById(R.id.password_item_email);
+        String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
+        String email = cursor.getString(cursor.getColumnIndexOrThrow("email_username"));
 
-        if (password != null) {
-            titleTextView.setText(password[0]);
-            emailTextView.setText(password[1]);
-        }
-
-        return convertView;
+        titleTextView.setText(title);
+        emailTextView.setText(email);
     }
 }

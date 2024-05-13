@@ -1,20 +1,17 @@
 package com.example.securepass;
 
+import android.content.Context;
 import android.os.Bundle;
 
-import android.view.MenuItem;
-import android.widget.ListView;
-import com.example.securepass.ui.folders.FoldersFragment;
-import com.example.securepass.ui.passwords.PasswordsFragment;
-import com.example.securepass.ui.profile.ProfileFragment;
-import com.example.securepass.ui.scanner.ScannerFragment;
-import com.example.securepass.ui.trash.TrashFragment;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -25,23 +22,23 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.securepass.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
     private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        EdgeToEdge.enable(this);
         com.example.securepass.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Retrieve user ID from intent extras
+
         userId = getIntent().getIntExtra("USER_ID", -1);
 
         if (userId != -1) {
-            // User ID received successfully, you can use it as needed
-            // For example, you can pass it to fragments or perform actions specific to the logged-in user
             Log.d("MainActivity", "User ID: " + userId);
         } else {
-            // User ID not found in intent extras, handle this scenario accordingly
             Log.e("MainActivity", "User ID not found");
         }
 
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int getUserId() {
-        // Return the user_id here
-        return userId;
+        return getIntent().getIntExtra("USER_ID", -1);
     }
 }
