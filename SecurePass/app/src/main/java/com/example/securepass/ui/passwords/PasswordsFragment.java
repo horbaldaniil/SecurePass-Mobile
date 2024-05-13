@@ -1,6 +1,5 @@
 package com.example.securepass.ui.passwords;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;

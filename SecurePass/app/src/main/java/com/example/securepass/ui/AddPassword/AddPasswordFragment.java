@@ -1,6 +1,5 @@
 package com.example.securepass.ui.AddPassword;
 
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,7 +9,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -58,7 +56,7 @@ public class AddPasswordFragment extends Fragment {
         String title = textTitle.getText().toString().trim();
         String email = textEmail.getText().toString().trim();
         String password = textPassword.getText().toString().trim();
-        int folderId = getSelectedFolderId(); // Implement this method to get the selected folder ID from the spinner
+        int folderId = getSelectedFolderId();
         int userId = -1;
 
         if (getActivity() != null && getActivity() instanceof MainActivity) {
@@ -67,21 +65,16 @@ public class AddPasswordFragment extends Fragment {
         }
 
         if (!title.isEmpty() && !password.isEmpty() && folderId != -1 && userId != -1) {
-            // Add the password to the database
             dbHelper.addPassword(title, email, password, folderId, userId);
 
-            // Clear input fields after saving
             textTitle.setText("");
             textEmail.setText("");
             textPassword.setText("");
-
-            // Optionally, navigate back to the previous fragment or perform other actions
         } else {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Implement this method to get the selected folder ID from the spinner
     private int getSelectedFolderId() {
         return 0;
     }

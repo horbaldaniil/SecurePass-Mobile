@@ -34,6 +34,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="19dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/delete_all"
             android:src="@drawable/ic_trash"
             app:tint="#dc3749" />
 

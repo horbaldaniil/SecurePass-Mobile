@@ -67,39 +67,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Language"
+            android:text="@string/language"
             android:textSize="20sp"
             android:layout_centerVertical="true"
             android:textColor="@color/black"/>
 
         <Spinner
             android:id="@+id/language_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:textSize="20sp"
-
-            android:layout_alignParentEnd="true">
-
-        </Spinner>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/theme_layout"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/language_layout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:textColor="@color/black"/>
-
-        <Spinner
-            android:id="@+id/theme_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:textSize="20sp"
@@ -118,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Logout"
-        app:layout_constraintTop_toBottomOf="@id/theme_layout" />
+        android:text="@string/logout"
+        app:layout_constraintTop_toBottomOf="@id/language_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

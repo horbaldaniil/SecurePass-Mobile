@@ -1,36 +1,58 @@
 package com.example.securepass.ui.profile;
 
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
 import com.example.securepass.R;
-import com.example.securepass.databinding.FragmentPasswordsBinding;
 import com.example.securepass.databinding.FragmentProfileBinding;
 import com.example.securepass.ui.login.LoginActivity;
 
-import org.w3c.dom.Text;
 
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
+
     DBHelper dbHelper;
 
     private int userId;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Spinner languageSpinner = view.findViewById(R.id.language_spinner);
+
+        languageSpinner.post(() -> {
+            languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedLanguage = parent.getItemAtPosition(position).toString();
+                    changeLanguage(selectedLanguage);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        });
+    }
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +71,6 @@ public class ProfileFragment extends Fragment {
 
 
         Spinner languageSpinner = root.findViewById(R.id.language_spinner);
-        Spinner themeSpinner = root.findViewById(R.id.theme_spinner);
 
         ArrayAdapter<CharSequence> languageAdapter = ArrayAdapter.createFromResource(
                 root.getContext(),
@@ -57,17 +78,10 @@ public class ProfileFragment extends Fragment {
                 android.R.layout.simple_spinner_item
         );
 
-        ArrayAdapter<CharSequence> themeAdapter = ArrayAdapter.createFromResource(
-                root.getContext(),
-                R.array.themes,
-                android.R.layout.simple_spinner_item
-        );
 
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        themeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         languageSpinner.setAdapter(languageAdapter);
-        themeSpinner.setAdapter(themeAdapter);
 
         logoutButton.setOnClickListener(v -> {
             if (getActivity() != null && getActivity() instanceof MainActivity) {
@@ -82,10 +96,24 @@ public class ProfileFragment extends Fragment {
         return root;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void changeLanguage(String language) {
+        Locale locale;
+        if (language.equals("Українська")) {
+            locale = new Locale("uk");
+        } else {
+            locale = Locale.ENGLISH;
+        }
+
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+        if (getActivity() != null && getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            mainActivity.recreate();
+        }
+
     }
 
 }
