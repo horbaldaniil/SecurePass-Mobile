@@ -70,6 +70,9 @@ public class AddPasswordFragment extends Fragment {
             textTitle.setText("");
             textEmail.setText("");
             textPassword.setText("");
+
+            NavController navController = Navigation.findNavController(requireView());
+            navController.popBackStack(R.id.navigation_passwords, false);
         } else {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
