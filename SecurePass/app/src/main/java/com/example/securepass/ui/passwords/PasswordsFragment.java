@@ -54,8 +54,6 @@ public class PasswordsFragment extends Fragment {
             Log.e("PasswordsFragment", "Invalid user ID");
         }
 
-
-
         listView.setOnItemClickListener((parent, view, position, id) -> {
 
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
@@ -72,19 +70,14 @@ public class PasswordsFragment extends Fragment {
 
         ImageButton addButton = root.findViewById(R.id.add_password_button);
         addButton.setOnClickListener(v -> {
-
             NavController navController = Navigation.findNavController(v);
 
             navController.popBackStack();
             navController.navigate(R.id.navigation_add_password);
         });
 
-
-
         return root;
     }
-
-
 
     @Override
     public void onDestroyView() {

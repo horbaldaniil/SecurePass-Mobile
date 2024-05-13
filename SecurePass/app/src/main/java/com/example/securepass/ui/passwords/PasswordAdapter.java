@@ -36,9 +36,11 @@ public class PasswordAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         TextView titleTextView = view.findViewById(R.id.password_item_title);
         TextView emailTextView = view.findViewById(R.id.password_item_email);
+        TextView passwordTextView = view.findViewById(R.id.password_item_password);
 
         String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
         String email = cursor.getString(cursor.getColumnIndexOrThrow("email_username"));
+        String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
 
         titleTextView.setText(title);
         emailTextView.setText(email);
