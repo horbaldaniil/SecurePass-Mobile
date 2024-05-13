@@ -1,66 +1,97 @@
 package com.example.securepass.ui.ChangePassword;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.securepass.DBHelper;
+import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChangePasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChangePasswordFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private int id;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int userId;
+    private DBHelper dbHelper;
+    EditText titleEditView;
 
-    public ChangePasswordFragment() {
-        // Required empty public constructor
-    }
+    EditText emailEditView;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangePasswordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChangePasswordFragment newInstance(String param1, String param2) {
-        ChangePasswordFragment fragment = new ChangePasswordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    EditText passwordEditView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_password, container, false);
+        View root = inflater.inflate(R.layout.fragment_change_password, container, false);
+        Bundle bundle = getArguments();
+
+
+        if (bundle != null) {
+            id = bundle.getInt("passwordId");
+            dbHelper = new DBHelper(requireContext());
+
+            Cursor password = dbHelper.getPasswordById(id);
+            password.moveToFirst();
+
+            if (password != null && password.moveToFirst()) {
+
+                titleEditView = root.findViewById(R.id.textTitle);
+                emailEditView = root.findViewById(R.id.textEmail);
+                passwordEditView = root.findViewById(R.id.textPassword);
+
+                titleEditView.setText(password.getString(password.getColumnIndexOrThrow("title")));
+                emailEditView.setText(password.getString(password.getColumnIndexOrThrow("email_username")));
+                passwordEditView.setText(password.getString(password.getColumnIndexOrThrow("password")));
+
+                password.close();
+            } else {
+                Log.e("SinglePasswordFragment", "Password not found or empty cursor");
+            }
+        }
+
+        TextView saveButton = root.findViewById(R.id.save);
+        saveButton.setOnClickListener(v -> {
+            savePassword();
+            NavController navController = Navigation.findNavController(v);
+
+            navController.popBackStack();
+            navController.navigate(R.id.navigation_passwords);
+
+        });
+        return root;
+    }
+
+    private void savePassword() {
+        String title = titleEditView.getText().toString().trim();
+        String email = emailEditView.getText().toString().trim();
+        String password = passwordEditView.getText().toString().trim();
+        int folderId = getSelectedFolderId();
+
+        if (getActivity() != null && getActivity() instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) getActivity();
+            userId = mainActivity.getUserId();
+        }
+
+        if (!title.isEmpty() && !password.isEmpty() && folderId != -1 && userId != -1) {
+            dbHelper.updatePasswordById(id, title, email, password, folderId);
+        } else {
+            Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private int getSelectedFolderId() {
+        return 0;
     }
 }

@@ -1,8 +1,11 @@
 package com.example.securepass.ui.AddPassword;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,13 @@ public class AddPasswordFragment extends Fragment {
         TextView saveButton = root.findViewById(R.id.save_button);
         saveButton.setOnClickListener(v -> savePassword());
 
+        ImageButton backButton = root.findViewById(R.id.icon_back);
+        backButton.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.popBackStack();
+            navController.navigate(R.id.navigation_passwords);
+        });
+
         return root;
     }
 
@@ -73,8 +83,6 @@ public class AddPasswordFragment extends Fragment {
 
     // Implement this method to get the selected folder ID from the spinner
     private int getSelectedFolderId() {
-        // Get the selected folder ID from the spinner
-        // Return the selected folder ID
-        return 0; // Dummy value, replace with actual implementation
+        return 0;
     }
 }

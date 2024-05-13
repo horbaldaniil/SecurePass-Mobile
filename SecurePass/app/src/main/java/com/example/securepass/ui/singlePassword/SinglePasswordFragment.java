@@ -96,10 +96,11 @@ public class SinglePasswordFragment extends Fragment {
                 navController.navigate(R.id.navigation_trash);
             }
             else {
+
                 NavController navController = Navigation.findNavController(v);
 
                 navController.popBackStack();
-                navController.navigate(R.id.navigation_change_password);
+                navController.navigate(R.id.navigation_change_password, bundle);
             }
         });
 
