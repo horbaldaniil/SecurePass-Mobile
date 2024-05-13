@@ -22,14 +22,16 @@ import com.example.securepass.R;
 public class SinglePasswordFragment extends Fragment {
 
     private DBHelper dbHelper;
-
     private int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_single_password, container, false);
+
         Button delete = root.findViewById(R.id.delete_button);
         TextView edit = root.findViewById(R.id.edit);
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getInt("passwordId");
@@ -51,10 +53,15 @@ public class SinglePasswordFragment extends Fragment {
                 TextView titleTextView = root.findViewById(R.id.add_password_title);
                 TextView emailTextView = root.findViewById(R.id.single_password_email_text);
                 TextView passwordTextView = root.findViewById(R.id.single_password_password_text);
+                TextView folderTextView = root.findViewById(R.id.single_password_folder_text);
 
                 titleTextView.setText(password.getString(password.getColumnIndexOrThrow("title")));
                 emailTextView.setText(password.getString(password.getColumnIndexOrThrow("email_username")));
                 passwordTextView.setText(password.getString(password.getColumnIndexOrThrow("password")));
+
+                String folderName = dbHelper.getFolderTitleById(password.getInt(password.getColumnIndexOrThrow("folder_id")));
+                Log.e("FolderName", String.valueOf(folderName));
+                folderTextView.setText(folderName);
 
                 password.close();
             } else {
@@ -104,8 +111,6 @@ public class SinglePasswordFragment extends Fragment {
             }
         });
 
-
-
         delete.setOnClickListener(v -> {
             dbHelper = new DBHelper(requireContext());
 
@@ -125,6 +130,7 @@ public class SinglePasswordFragment extends Fragment {
                 navController.navigate(R.id.navigation_passwords);
             }
         });
+
         return root;
     }
 }

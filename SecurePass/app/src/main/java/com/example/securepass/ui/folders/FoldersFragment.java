@@ -11,12 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
@@ -29,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FoldersFragment extends Fragment {
-
     private FragmentFoldersBinding binding;
     private ListView listView;
     private DBHelper dbHelper;
@@ -54,23 +54,31 @@ public class FoldersFragment extends Fragment {
         ImageButton addButton = root.findViewById(R.id.add_folder_button);
         addButton.setOnClickListener(v -> showAddFolderDialog());
 
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+
+            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
+
+            int folderId = cursor.getInt(cursor.getColumnIndexOrThrow(DBHelper.KEY_ID));
+
+            NavController navController = Navigation.findNavController(view);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("folderId", folderId);
+
+            navController.popBackStack();
+            navController.navigate(R.id.navigation_folder_passwords, bundle);
+        });
+
         return root;
     }
 
     private void refreshFolderList() {
-        List<String> folders = new ArrayList<>();
         Cursor cursor = dbHelper.getFoldersForUser(userId);
 
         if (cursor != null) {
-            while (cursor.moveToNext()) {
-                String folderTitle = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_FOLDER_TITLE));
-                folders.add(folderTitle);
-            }
-            cursor.close();
+            FolderAdapter adapter = new FolderAdapter(requireContext(), cursor, R.layout.folder_item);
+            listView.setAdapter(adapter);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.folder_item, R.id.folder_item_title, folders);
-        listView.setAdapter(adapter);
     }
 
     private void showAddFolderDialog() {
@@ -93,6 +101,7 @@ public class FoldersFragment extends Fragment {
 
         builder.show();
     }
+
 
 
 

@@ -139,7 +139,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return userEmail;
     }
 
-
     public long addUser(String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         long userId = -1; // Default user ID if insertion fails
@@ -331,6 +330,23 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(TABLE_FOLDERS, whereClause, whereArgs);
 
         db.close();
+    }
+
+    public String getFolderTitleById(int folderId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {KEY_FOLDER_TITLE};
+        String selection = KEY_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(folderId)};
+        Cursor cursor = db.query(TABLE_FOLDERS, columns, selection, selectionArgs, null, null, null);
+        Log.e("FolderId in db", String.valueOf(folderId));
+        String folderTitle = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            folderTitle = cursor.getString(cursor.getColumnIndexOrThrow(KEY_FOLDER_TITLE));
+            cursor.close();
+        }
+        db.close();
+
+        return folderTitle;
     }
 
 }
