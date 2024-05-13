@@ -122,6 +122,24 @@ public class DBHelper extends SQLiteOpenHelper {
         return userId;
     }
 
+    public String getUserEmailById(int userId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {KEY_EMAIL};
+        String selection = KEY_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+        Cursor cursor = db.query(TABLE_USERS, columns, selection, selectionArgs, null, null, null);
+
+        String userEmail = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            userEmail = cursor.getString(cursor.getColumnIndexOrThrow(KEY_EMAIL));
+            cursor.close();
+        }
+        db.close();
+
+        return userEmail;
+    }
+
+
     public long addUser(String email, String password) {
         SQLiteDatabase db = getWritableDatabase();
         long userId = -1; // Default user ID if insertion fails
