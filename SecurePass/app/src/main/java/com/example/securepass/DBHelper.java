@@ -160,7 +160,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, selectionArgs);
     }
 
-
     // Method to get all the passwords with given user_id and folder_id
     public Cursor getPasswordsForUserAndFolder(int userId, int folderId) {
         SQLiteDatabase db = getReadableDatabase();
