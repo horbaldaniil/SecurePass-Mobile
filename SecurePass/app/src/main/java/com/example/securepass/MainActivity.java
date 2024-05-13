@@ -25,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.securepass.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Retrieve user ID from intent extras
-        int userId = getIntent().getIntExtra("USER_ID", -1);
+        userId = getIntent().getIntExtra("USER_ID", -1);
 
         if (userId != -1) {
             // User ID received successfully, you can use it as needed
@@ -52,4 +53,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
+    public int getUserId() {
+        // Return the user_id here
+        return userId;
+    }
 }
