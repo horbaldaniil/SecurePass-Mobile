@@ -266,4 +266,52 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {String.valueOf(userId)};
         return db.rawQuery(query, selectionArgs);
     }
+
+    public void restorePasswordById(int passwordId) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_DELETED, 0); // Mark the password as not deleted
+        String whereClause = KEY_ID + " = ?";
+        String[] whereArgs = {String.valueOf(passwordId)};
+        db.update(TABLE_PASSWORDS, values, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void restoreAllPasswordsForUser(int userId) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_DELETED, 0); // Mark all passwords as not deleted
+        String whereClause = KEY_USER_ID + " = ?";
+        String[] whereArgs = {String.valueOf(userId)};
+        db.update(TABLE_PASSWORDS, values, whereClause, whereArgs);
+        db.close();
+    }
+
+    public void addFolder(String folderTitle, int userId) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_FOLDER_TITLE, folderTitle);
+        values.put(KEY_USER_ID, userId);
+        db.insert(TABLE_FOLDERS, null, values);
+        db.close();
+    }
+
+    public void deleteFolder(int folderId) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        // Remove the folder association from passwords in this folder
+        ContentValues nullFolderValues = new ContentValues();
+        nullFolderValues.putNull(KEY_FOLDER_ID);
+        String whereClause = KEY_FOLDER_ID + " = ?";
+        String[] whereArgs = {String.valueOf(folderId)};
+        db.update(TABLE_PASSWORDS, nullFolderValues, whereClause, whereArgs);
+
+        // Delete the folder from the folders table
+        whereClause = KEY_ID + " = ?";
+        whereArgs = new String[]{String.valueOf(folderId)};
+        db.delete(TABLE_FOLDERS, whereClause, whereArgs);
+
+        db.close();
+    }
+
 }
