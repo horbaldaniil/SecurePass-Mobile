@@ -29,6 +29,7 @@ public class SinglePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_single_password, container, false);
         Button delete = root.findViewById(R.id.delete_button);
+        TextView edit = root.findViewById(R.id.edit);
         Bundle bundle = getArguments();
         if (bundle != null) {
             id = bundle.getInt("passwordId");
@@ -38,18 +39,22 @@ public class SinglePasswordFragment extends Fragment {
             password.moveToFirst();
             if ((password.getInt(password.getColumnIndexOrThrow("deleted")) == 1))
             {
+                edit.setText("Restore");
                 delete.setText("Delete password");
             }
             else {
+                edit.setText("Edit");
                 delete.setText("Move to trash");
             }
 
             if (password != null && password.moveToFirst()) {
                 TextView titleTextView = root.findViewById(R.id.add_password_title);
                 TextView emailTextView = root.findViewById(R.id.single_password_email_text);
+                TextView passwordTextView = root.findViewById(R.id.single_password_password_text);
 
                 titleTextView.setText(password.getString(password.getColumnIndexOrThrow("title")));
                 emailTextView.setText(password.getString(password.getColumnIndexOrThrow("email_username")));
+                passwordTextView.setText(password.getString(password.getColumnIndexOrThrow("password")));
 
                 password.close();
             } else {
@@ -60,19 +65,42 @@ public class SinglePasswordFragment extends Fragment {
         ImageButton backButton = root.findViewById(R.id.icon_back);
         backButton.setOnClickListener(v -> {
 
-            NavController navController = Navigation.findNavController(v);
+            dbHelper = new DBHelper(requireContext());
 
-            navController.popBackStack();
-            navController.navigate(R.id.navigation_passwords);
+            Cursor password = dbHelper.getPasswordById(id);
+            password.moveToFirst();
+            if ((password.getInt(password.getColumnIndexOrThrow("deleted")) == 1))
+            {
+                NavController navController = Navigation.findNavController(v);
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_trash);
+            }
+            else {
+                NavController navController = Navigation.findNavController(v);
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_passwords);
+            }
+
         });
 
-        TextView edit = root.findViewById(R.id.edit);
+
         edit.setOnClickListener(v -> {
+            Cursor password = dbHelper.getPasswordById(id);
+            password.moveToFirst();
+            if ((password.getInt(password.getColumnIndexOrThrow("deleted")) == 1))
+            {
+                dbHelper.restorePasswordById(id);
+                NavController navController = Navigation.findNavController(v);
 
-            NavController navController = Navigation.findNavController(v);
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_trash);
+            }
+            else {
+                NavController navController = Navigation.findNavController(v);
 
-            navController.popBackStack();
-            navController.navigate(R.id.navigation_change_password);
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_change_password);
+            }
         });
 
 
