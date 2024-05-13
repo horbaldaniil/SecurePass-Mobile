@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.securepass.DBHelper;
-import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 
 public class SinglePasswordFragment extends Fragment {

@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_passwords"
         android:icon="@drawable/ic_password"
-        android:title="Passwords" />
+        android:title="@string/passwords" />
 
     <item
         android:id="@+id/navigation_folders"
@@ -19,11 +19,11 @@
     <item
         android:id="@+id/navigation_scanner"
         android:icon="@drawable/ic_scanner"
-        android:title="Scanner" />
+        android:title="@string/scanner_menu" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:title="@string/profile_menu" />
 
 </menu>

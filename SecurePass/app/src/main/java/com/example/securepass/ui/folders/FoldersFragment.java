@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentFoldersBinding;
-import com.example.securepass.ui.passwords.PasswordAdapter;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;

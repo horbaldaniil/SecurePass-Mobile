@@ -46,14 +46,15 @@
         app:layout_constraintTop_toBottomOf="@+id/scanner_title">
 
         <TextView
-            android:text="Weak passwords"
+            android:text="@string/weak_passwords"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="3 accounts"
+            android:id="@+id/weak_password_count"
+            android:text="@string/accounts"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -83,14 +84,15 @@
         app:layout_constraintTop_toBottomOf="@+id/weak_password">
 
         <TextView
-            android:text="Reused passwords"
+            android:text="@string/reused_passwords"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="0 accounts"
+            android:id="@+id/reused_password_count"
+            android:text="@string/accounts"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -118,14 +120,15 @@
         app:layout_constraintTop_toBottomOf="@+id/reused_password">
 
         <TextView
-            android:text="Old passwords"
+            android:text="@string/old_passwords"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="5 accounts"
+            android:id="@+id/old_password_count"
+            android:text="@string/accounts"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,8 +20,6 @@ import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentTrashBinding;
 import com.example.securepass.ui.passwords.PasswordAdapter;
-
-import java.util.Arrays;
 
 public class TrashFragment extends Fragment {
 

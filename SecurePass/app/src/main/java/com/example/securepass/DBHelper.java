@@ -243,10 +243,63 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getOldPasswordsForUser(int userId) {
         SQLiteDatabase db = getReadableDatabase();
-        long sixMonthsAgoMillis = System.currentTimeMillis() - (6 * 30 * 24 * 60 * 60 * 1000L); // 6 months in milliseconds
+        long sixMonthsAgoMillis = System.currentTimeMillis() - (6 * 30 * 24 * 60 * 60 * 10L);
         String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_USER_ID + " = ? AND " + KEY_LAST_UPDATED + " < ?";
         String[] selectionArgs = {String.valueOf(userId), String.valueOf(sixMonthsAgoMillis)};
         return db.rawQuery(query, selectionArgs);
+    }
+
+    public boolean isWeakPasswordForUser(int userId, String password) {
+        // Check if password length is less than 8 characters
+        if (password.length() < 8) {
+            return true;
+        }
+
+        // Check if password contains uppercase letters
+        boolean hasUpperCase = !password.equals(password.toLowerCase());
+
+        // Check if password contains lowercase letters
+        boolean hasLowerCase = !password.equals(password.toUpperCase());
+
+        // Check if password contains digits
+        boolean hasDigits = password.matches(".*\\d.*");
+
+        // Check if password contains special characters
+        boolean hasSpecialChars = !password.matches("[A-Za-z0-9]*");
+
+        // Return true if any of the conditions for a weak password are met
+        return !hasUpperCase || !hasLowerCase || !hasDigits || !hasSpecialChars;
+    }
+
+    public Cursor getWeakPasswordsCursorForUser(int userId) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = getPasswordsForUser(userId);
+
+        List<Integer> weakPasswordIds = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String password = cursor.getString(cursor.getColumnIndexOrThrow(KEY_PASSWORD));
+
+                if (isWeakPasswordForUser(userId, password)) {
+                    int passwordId = cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID));
+                    weakPasswordIds.add(passwordId);
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        StringJoiner passwordJoiner = new StringJoiner(",", "(", ")");
+        for (int id : weakPasswordIds) {
+            passwordJoiner.add(String.valueOf(id));
+        }
+
+        String query = "SELECT * FROM " + TABLE_PASSWORDS + " WHERE " + KEY_ID + " IN " + passwordJoiner.toString();
+
+        // Виконуємо запит і повертаємо Cursor
+        return db.rawQuery(query, null);
     }
 
     public Cursor getReusedPasswordsForUser(int userId) {

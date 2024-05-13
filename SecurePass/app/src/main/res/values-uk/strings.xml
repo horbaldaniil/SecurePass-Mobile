@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_passwords">Всі паролі</string>
+    <string name="title_folders">Папки</string>
+    <string name="title_trash">Смітник</string>
+    <string name="title_scanner">Сканер</string>
+    <string name="title_profile">Налаштування профілю</string>
+    <string name="title_login">Вхід</string>
+    <string name="auth_title_login">Вхід</string>
+    <string name="auth_title_signup">Реєстрація</string>
+    <string name="email_title">Пошта</string>
+    <string name="password_title">Пароль</string>
+    <string name="confirm_password_title">Підтвердити пароль</string>
+    <string name="login">Вхід</string>
+    <string name="signup">Реєстрація</string>
+    <string name="add_password">Добавити пароль</string>
+    <string name="save">Зберегти</string>
+    <string name="title">Назва</string>
+    <string name="folder_title">Папка</string>
+    <string name="back">Назад</string>
+    <string name="edit_password">Змінити пароль</string>
+    <string name="language">Мова</string>
+    <string name="theme">Тема</string>
+    <string name="logout">Вийти</string>
+    <string name="weak_passwords">Слабкі паролі</string>
+    <string name="accounts">облікові записи</string>
+    <string name="reused_passwords">Повторні паролі</string>
+    <string name="old_passwords">Старі паролі</string>
+    <string name="edit">Змінити</string>
+    <string name="delete_password">Видалити пароль</string>
+    <string name="delete_all">Видалити все</string>
+    <string name="passwords">Паролі</string>
+    <string name="profile_menu">Профіль</string>
+    <string name="scanner_menu">Сканер</string>
+</resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SecurePass</string>
+    <string name="app_name" translatable="false">SecurePass</string>
 
     <string name="title_passwords">All Passwords</string>
     <string name="title_folders">Folders</string>
@@ -8,14 +8,36 @@
     <string name="title_profile">Profile Settings</string>
 
     <string name="title_login">Login</string>
-    <string name="auth_title_login">SecurePass\nLogin</string>
-    <string name="auth_title_signup">SecurePass\nSign up</string>
+    <string name="auth_title_login">Login</string>
+    <string name="auth_title_signup">Sign up</string>
     <string name="email_title">Email</string>
     <string name="password_title">Password</string>
     <string name="confirm_password_title">Confirm Password</string>
-    <string name="email_hint">your@email.com</string>
-    <string name="password_hint">yourpassword</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="email_hint" translatable="false">your@email.com</string>
+    <string name="password_hint" translatable="false">yourpassword</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
+
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="add_password">Add password</string>
+    <string name="save">Save</string>
+    <string name="title">Title</string>
+    <string name="folder_title">Folder</string>
+    <string name="title_hint" translatable="false">yourtitle</string>
+    <string name="back">Back</string>
+    <string name="edit_password">Edit password</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="logout">Logout</string>
+    <string name="weak_passwords">Weak passwords</string>
+    <string name="accounts">accounts</string>
+    <string name="reused_passwords">Reused passwords</string>
+    <string name="old_passwords">Old passwords</string>
+    <string name="edit">Edit</string>
+    <string name="delete_password">Delete Password</string>
+    <string name="delete_all">Delete all</string>
+    <string name="passwords">Passwords</string>
+    <string name="profile_menu">Profile</string>
+    <string name="scanner_menu">Scanner</string>
 </resources>

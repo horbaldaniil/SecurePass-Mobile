@@ -54,4 +54,19 @@
         android:id="@+id/navigation_folder_passwords"
         android:name="com.example.securepass.ui.passwords.FolderPasswordsFragment"
         tools:layout="@layout/fragment_folder_passwords" />
+    <fragment
+        android:id="@+id/navigation_weak_passwords"
+        android:name="com.example.securepass.ui.passwords.PasswordsFragment"
+        tools:layout="@layout/fragment_passwords" />
+
+    <fragment
+        android:id="@+id/navigation_old_passwords"
+        android:name="com.example.securepass.ui.passwords.PasswordsFragment"
+        tools:layout="@layout/fragment_passwords" />
+
+    <fragment
+        android:id="@+id/navigation_reused_passwords"
+        android:name="com.example.securepass.ui.passwords.PasswordsFragment"
+        tools:layout="@layout/fragment_passwords" />
+
 </navigation>

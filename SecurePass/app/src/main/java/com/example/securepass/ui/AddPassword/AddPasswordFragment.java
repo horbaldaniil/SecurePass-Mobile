@@ -137,5 +137,4 @@ public class AddPasswordFragment extends Fragment {
             return -1;
         }
     }
-
 }
