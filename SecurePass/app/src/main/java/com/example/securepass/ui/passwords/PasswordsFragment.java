@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,8 @@ import com.example.securepass.DBHelper;
 import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 import com.example.securepass.databinding.FragmentPasswordsBinding;
+
+import java.util.Objects;
 
 public class PasswordsFragment extends Fragment {
 
@@ -42,7 +45,28 @@ public class PasswordsFragment extends Fragment {
         }
 
         if (userId != -1) {
-            Cursor cursor = dbHelper.getPasswordsForUser(userId);
+            Cursor cursor;
+            if (getArguments() != null) {
+                if (Objects.equals(getArguments().getString("type"), "old")) {
+                    TextView title = root.findViewById(R.id.text_passwords);
+                    title.setText("Old passwords");
+                    cursor = dbHelper.getOldPasswordsForUser(userId);
+                }
+                else if(Objects.equals(getArguments().getString("type"), "weak")) {
+                    TextView title = root.findViewById(R.id.text_passwords);
+                    title.setText("Weak passwords");
+                    cursor = dbHelper.getWeakPasswordsCursorForUser(userId);
+                }
+                else {
+                    TextView title = root.findViewById(R.id.text_passwords);
+                    title.setText("Reused passwords");
+                    cursor = dbHelper.getReusedPasswordsForUser(userId);
+                }
+            }
+            else {
+                cursor = dbHelper.getPasswordsForUser(userId);
+            }
+
             if (cursor != null) {
                 PasswordAdapter adapter = new PasswordAdapter(requireContext(), cursor, R.layout.password_item);
                 listView.setAdapter(adapter);
