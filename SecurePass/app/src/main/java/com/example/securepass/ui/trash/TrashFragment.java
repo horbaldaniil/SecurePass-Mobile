@@ -34,8 +34,8 @@ public class TrashFragment extends Fragment {
 
         listView = root.findViewById(R.id.trash_list);
 
-        PasswordAdapter adapter = new PasswordAdapter(root.getContext(), R.layout.password_item, Arrays.asList(passwords));
-        listView.setAdapter(adapter);
+        //PasswordAdapter adapter = new PasswordAdapter(root.getContext(), R.layout.password_item, Arrays.asList(passwords));
+        //listView.setAdapter(adapter);
 
         return root;
     }

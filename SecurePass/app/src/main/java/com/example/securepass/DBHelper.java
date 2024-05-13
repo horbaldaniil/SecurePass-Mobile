@@ -17,32 +17,32 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class DBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "mydatabase.db";
+    public static final String DATABASE_NAME = "securepass.db";
 
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
 
     // Table names
-    private static final String TABLE_USERS = "users";
-    private static final String TABLE_PASSWORDS = "passwords";
-    private static final String TABLE_FOLDERS = "folders";
+    public static final String TABLE_USERS = "users";
+    public static final String TABLE_PASSWORDS = "passwords";
+    public static final String TABLE_FOLDERS = "folders";
 
     // Common column names
-    private static final String KEY_ID = "id";
-    private static final String KEY_USER_ID = "user_id";
+    public static final String KEY_ID = "_id";
+    public static final String KEY_USER_ID = "user_id";
 
     // USERS table - column names
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PASSWORD = "password";
 
     // PASSWORDS table - column names
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_EMAIL_USERNAME = "email_username";
-    private static final String KEY_FOLDER_ID = "folder_id";
-    private static final String KEY_LAST_UPDATED = "last_updated";
-    private static final String KEY_DELETED = "deleted";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_EMAIL_USERNAME = "email_username";
+    public static final String KEY_FOLDER_ID = "folder_id";
+    public static final String KEY_LAST_UPDATED = "last_updated";
+    public static final String KEY_DELETED = "deleted";
 
     // FOLDERS table - column names
-    private static final String KEY_FOLDER_TITLE = "title";
+    public static final String KEY_FOLDER_TITLE = "title";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -90,17 +90,19 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-//    public void generateUserTestData() {
-//        String sql = "INSERT INTO " + TABLE_USERS + " ("+ KEY_ID + ", " + KEY_EMAIL + ", " + KEY_PASSWORD + ") " +
-//                "VALUES " +
-//                "(1, 'test1@example.com', 'password123'), " +
-//                "(2, 'test2@example.com', 'password456'), " +
-//                "(3, 'test3@example.com', 'password789')";
-//
-//        SQLiteDatabase db = getWritableDatabase();
-//        db.execSQL(sql);
-//        db.close();
-//    }
+    public void generateUserTestData() {
+        String currentTime = String.valueOf(System.currentTimeMillis());
+
+        String sql = "INSERT INTO " + TABLE_PASSWORDS + " ("+ KEY_TITLE + ", " + KEY_PASSWORD + ",  " + KEY_EMAIL_USERNAME + ", " + KEY_USER_ID + ", " + KEY_LAST_UPDATED + ", " + KEY_DELETED + ") " +
+                "VALUES " +
+                "('Title1', 'password1', 'your1@email.com', 1, '" + currentTime + "', 0), " +
+                "('Title2', 'password2', 'your2@email.com', 1, '" + currentTime + "', 0), " +
+                "('Title3', 'password3', 'your3@email.com', 1, '" + currentTime + "', 0)";
+
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(sql);
+        db.close();
+    }
 
     @SuppressLint("Range")
     public int checkUser(String email, String password) {

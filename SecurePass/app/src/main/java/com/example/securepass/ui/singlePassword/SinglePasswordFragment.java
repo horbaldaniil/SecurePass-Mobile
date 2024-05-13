@@ -5,18 +5,22 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import android.database.Cursor;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.securepass.DBHelper;
+import com.example.securepass.MainActivity;
 import com.example.securepass.R;
 
 public class SinglePasswordFragment extends Fragment {
 
-
+    private DBHelper dbHelper;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,14 +28,22 @@ public class SinglePasswordFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String title = bundle.getString("title");
-            String email = bundle.getString("email");
+            int id = bundle.getInt("passwordId");
+            dbHelper = new DBHelper(requireContext());
 
-            TextView titleTextView = root.findViewById(R.id.add_password_title);
-            TextView emailTextView = root.findViewById(R.id.single_password_email_text);
+            Cursor password = dbHelper.getPasswordById(id);
 
-            titleTextView.setText(title);
-            emailTextView.setText(email);
+            if (password != null && password.moveToFirst()) {
+                TextView titleTextView = root.findViewById(R.id.add_password_title);
+                TextView emailTextView = root.findViewById(R.id.single_password_email_text);
+
+                titleTextView.setText(password.getString(password.getColumnIndexOrThrow("title")));
+                emailTextView.setText(password.getString(password.getColumnIndexOrThrow("email_username")));
+
+                password.close();
+            } else {
+                Log.e("SinglePasswordFragment", "Password not found or empty cursor");
+            }
         }
 
         ImageButton backButton = root.findViewById(R.id.icon_back);
